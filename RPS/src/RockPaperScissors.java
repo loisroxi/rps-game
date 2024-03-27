@@ -40,14 +40,9 @@ public class RockPaperScissors {
      */
     public static void main(String[] args) {
 
-        //1.1 I can play Player vs Computer
-        playPlayerVsComputer();
-
-        //1.2 I can play Computer vs Computer
-        playComputerVsComputer();
 
         //1.3 I can play a different game each time
-        //1.3.1 Implement choosing menu
+        chooseGameMethod();
 
         //2.1 Implement GUI
 
@@ -65,8 +60,7 @@ public class RockPaperScissors {
         playerDecision = readPlayerMove();
         computerDecision = generateComputerDecision();
         System.out.println("Computer chosen move: " + computerDecision);
-        determineWinner(playerDecision, computerDecision);
-
+        determineWinner("You", "Computer", playerDecision, computerDecision);
     }
 
     //1.1.1 Read player input
@@ -103,7 +97,7 @@ public class RockPaperScissors {
         System.out.println("Computer 2 chosen move: " + computer2Decision);
 
         //Determine the winner based on each moves
-        determineWinner(computer1Decision, computer2Decision);
+        determineWinner("Computer 1", "Computer 2", computer1Decision, computer2Decision);
     }
 
     public static String generateComputerDecision() {
@@ -116,15 +110,48 @@ public class RockPaperScissors {
         return possibleMoves[randomIndex];
     }
 
-    public static void determineWinner(String playerMove, String computerMove) {
+    public static void determineWinner(String actor1, String actor2, String playerMove, String computerMove) {
         if (playerMove.equals(computerMove)) {
             System.out.println("Tie!");
         } else if ((playerMove.equals("Rock") && computerMove.equals("Scissors")) ||
                 (playerMove.equals("Paper") && computerMove.equals("Rock")) ||
                 (playerMove.equals("Scissors") && computerMove.equals("Paper"))) {
-            System.out.println("You won!");
+            System.out.println(STR."\{actor1} won!");
         } else {
-            System.out.println("Computer won!");
+            System.out.println(STR."\{actor2} won!");
         }
+    }
+
+    //1.3.1 Implement choosing menu
+    public static void chooseGameMethod() {
+
+        String gameMode;
+
+        while (true) {
+            System.out.println("Please choose the desired game method:");
+            System.out.println("1 - Player vs Computer");
+            System.out.println("2 - Computer vs Computer");
+            System.out.println("Type \"PvC\" or \"CvC\" for the desired case.");
+
+            Scanner scn = new Scanner(System.in);
+            gameMode = scn.nextLine();
+
+            if (gameMode.equals("PvC")) {
+                System.out.println("You have chosen: Player vs Computer");
+                break;
+            } else if (gameMode.equals("CvC")) {
+                System.out.println("You have chosen: Computer vs Computer");
+                break;
+            } else {
+                System.out.println("You have chosen an invalid move: " + gameMode);
+            }
+        }
+
+        if (gameMode.equals("PvC"))
+            //1.1 I can play Player vs Computer
+            playPlayerVsComputer();
+        else if (gameMode.equals("CvC"))
+            //1.2 I can play Computer vs Computer
+            playComputerVsComputer();
     }
 }
