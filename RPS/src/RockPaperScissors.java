@@ -1,4 +1,5 @@
 import java.util.*;
+import javax.swing.*;
 
 public class RockPaperScissors {
 
@@ -44,8 +45,6 @@ public class RockPaperScissors {
         //1.3 I can play a different game each time
         chooseGameMethod();
 
-        //2.1 Implement GUI
-
         //2.2 Implement tests
 
         //2.3 Ensure agile engineering practices
@@ -53,37 +52,41 @@ public class RockPaperScissors {
 
     }
 
-    public static void playPlayerVsComputer() {
-        String playerDecision;
-        String computerDecision;
+    //1.3.1 Implement choosing menu
+    //2.1 Implement GUI
+    public static void chooseGameMethod() {
 
-        playerDecision = readPlayerMove();
-        computerDecision = generateComputerDecision();
-        System.out.println("Computer chosen move: " + computerDecision);
-        determineWinner("You", "Computer", playerDecision, computerDecision);
+        String[] options = {"Player vs Computer", "Computer vs Computer", "Exit"};
+        int gameMode = JOptionPane.showOptionDialog(null, "Please choose the desired game method:",
+                "Game Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+
+        if (gameMode == 0) {
+            playPlayerVsComputer();
+        } else if (gameMode == 1) {
+            playComputerVsComputer();
+        } else if (gameMode == 2) {
+            return; // Exit the program
+        }
     }
 
-    //1.1.1 Read player input
-    public static String readPlayerMove() {
+    //1.1 I can play Player vs Computer
+    public static void playPlayerVsComputer() {
 
-        Scanner scn = new Scanner(System.in);
-        String playerDecision;
+        String[] moves = {"Rock", "Paper", "Scissors"};
+        int moveChoice = JOptionPane.showOptionDialog(null, "Choose your move:",
+                "Player vs Computer", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, moves, moves[0]);
 
-        System.out.println("Welcome to the Rock Paper Scissors - Player vs Computer Game!");
-
-        System.out.println("Choose your move: Rock/Paper/Scissors");
-        while (true) {
-            playerDecision = scn.nextLine();
-
-            if (playerDecision.equals("Rock") || playerDecision.equals("Paper") || playerDecision.equals("Scissors")) {
-                System.out.println("You have chosen: " + playerDecision);
-                break;
-            } else {
-                System.out.println("You have chosen an invalid move: " + playerDecision);
-                System.out.println("YPlease choose your move from the available moves: Rock, Paper, Scissors");
-            }
+        if (moveChoice != JOptionPane.CLOSED_OPTION) {
+            String playerDecision = moves[moveChoice];
+            String computerDecision = generateComputerDecision();
+            String winner = determineWinner("You", "Computer", playerDecision, computerDecision);
+            JOptionPane.showMessageDialog(null, "You chose: " + playerDecision +
+                    "\nComputer chose: " + computerDecision +
+                    "\nResult: " + winner);
         }
-        return playerDecision;
+        chooseGameMethod();
     }
 
     //1.2.1 Implement Computer vs Computer
@@ -93,11 +96,11 @@ public class RockPaperScissors {
         String computer1Decision = generateComputerDecision();
         String computer2Decision = generateComputerDecision();
 
-        System.out.println("Computer 1 chosen move: " + computer1Decision);
-        System.out.println("Computer 2 chosen move: " + computer2Decision);
-
-        //Determine the winner based on each moves
-        determineWinner("Computer 1", "Computer 2", computer1Decision, computer2Decision);
+        String winner = determineWinner("Computer 1", "Computer 2", computer1Decision, computer2Decision);
+        JOptionPane.showMessageDialog(null, "Computer 1 chose: " + computer1Decision +
+                "\nComputer 2 chose: " + computer2Decision +
+                "\nResult: " + winner);
+        chooseGameMethod();
     }
 
     public static String generateComputerDecision() {
@@ -110,48 +113,16 @@ public class RockPaperScissors {
         return possibleMoves[randomIndex];
     }
 
-    public static void determineWinner(String actor1, String actor2, String playerMove, String computerMove) {
+    public static String determineWinner(String actor1, String actor2, String playerMove, String computerMove) {
         if (playerMove.equals(computerMove)) {
-            System.out.println("Tie!");
+            return "Tie!";
         } else if ((playerMove.equals("Rock") && computerMove.equals("Scissors")) ||
                 (playerMove.equals("Paper") && computerMove.equals("Rock")) ||
                 (playerMove.equals("Scissors") && computerMove.equals("Paper"))) {
-            System.out.println(STR."\{actor1} won!");
+            return actor1 + " won!";
         } else {
-            System.out.println(STR."\{actor2} won!");
+            return actor2 + " won!";
         }
     }
 
-    //1.3.1 Implement choosing menu
-    public static void chooseGameMethod() {
-
-        String gameMode;
-
-        while (true) {
-            System.out.println("Please choose the desired game method:");
-            System.out.println("1 - Player vs Computer");
-            System.out.println("2 - Computer vs Computer");
-            System.out.println("Type \"PvC\" or \"CvC\" for the desired case.");
-
-            Scanner scn = new Scanner(System.in);
-            gameMode = scn.nextLine();
-
-            if (gameMode.equals("PvC")) {
-                System.out.println("You have chosen: Player vs Computer");
-                break;
-            } else if (gameMode.equals("CvC")) {
-                System.out.println("You have chosen: Computer vs Computer");
-                break;
-            } else {
-                System.out.println("You have chosen an invalid move: " + gameMode);
-            }
-        }
-
-        if (gameMode.equals("PvC"))
-            //1.1 I can play Player vs Computer
-            playPlayerVsComputer();
-        else if (gameMode.equals("CvC"))
-            //1.2 I can play Computer vs Computer
-            playComputerVsComputer();
-    }
 }
