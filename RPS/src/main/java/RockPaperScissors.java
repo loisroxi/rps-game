@@ -16,7 +16,7 @@ public class RockPaperScissors {
 
         String[] options = {"Player vs Computer", "Computer vs Computer", "Exit"};
         int gameMode = JOptionPane.showOptionDialog(null, "Please choose the desired game method:",
-                "Game Selection", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                "Waste an Hour Having Fun", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, options, options[0]);
 
         if (gameMode == 0) {
