@@ -3,6 +3,7 @@ import javax.swing.*;
 
 public class RockPaperScissors {
 
+    static String[] moves = {"Rock", "Paper", "Scissors", "Lizard", "Spock"};
     public static void main(String[] args) {
 
         //1.3 I can play a different game each time
@@ -30,7 +31,6 @@ public class RockPaperScissors {
     //1.1 I can play Player vs Computer
     public static void playPlayerVsComputer() {
 
-        String[] moves = {"Rock", "Paper", "Scissors"};
         int moveChoice = JOptionPane.showOptionDialog(null, "Choose your move:",
                 "Player vs Computer", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
                 null, moves, moves[0]);
@@ -61,21 +61,27 @@ public class RockPaperScissors {
     }
 
     public static String generateComputerDecision() {
-        String[] possibleMoves = {"Rock", "Paper", "Scissors"};
 
         Random random = new Random();
         //Generate random index
-        int randomIndex = random.nextInt(possibleMoves.length);
+        int randomIndex = random.nextInt(moves.length);
         //Return the string at the randomly generated index
-        return possibleMoves[randomIndex];
+        return moves[randomIndex];
     }
 
     public static String determineWinner(String actor1, String actor2, String playerMove, String computerMove) {
         if (playerMove.equals(computerMove)) {
             return "Tie!";
         } else if ((playerMove.equals("Rock") && computerMove.equals("Scissors")) ||
+                (playerMove.equals("Rock") && computerMove.equals("Lizard")) ||
                 (playerMove.equals("Paper") && computerMove.equals("Rock")) ||
-                (playerMove.equals("Scissors") && computerMove.equals("Paper"))) {
+                (playerMove.equals("Paper") && computerMove.equals("Spock")) ||
+                (playerMove.equals("Scissors") && computerMove.equals("Paper")) ||
+                (playerMove.equals("Scissors") && computerMove.equals("Lizard")) ||
+                (playerMove.equals("Lizard") && computerMove.equals("Paper")) ||
+                (playerMove.equals("Lizard") && computerMove.equals("Spock")) ||
+                (playerMove.equals("Spock") && computerMove.equals("Rock")) ||
+                (playerMove.equals("Spock") && computerMove.equals("Scissors"))) {
             return actor1 + " won!";
         } else {
             return actor2 + " won!";
