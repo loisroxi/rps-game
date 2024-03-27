@@ -39,6 +39,4 @@ public class RockPaperScissorsTest {
         assertEquals("Computer 2 won!", game.determineWinner("Computer 1", "Computer 2", "Paper", "Scissors"));
         assertEquals("Computer 2 won!", game.determineWinner("Computer 1", "Computer 2", "Rock", "Paper"));
     }
-
-    // You can add more tests here based on your requirements
 }
